@@ -1,4 +1,4 @@
-// https://stackoverflow.com/a/43824723/1240036
+//regex
 function hasClass(el, className) {
   if (el.classList)
     return el.classList.contains(className);
