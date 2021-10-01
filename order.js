@@ -1,106 +1,101 @@
-// https://stackoverflow.com/a/43824723/1240036
 function hasClass(el, className) {
-  if (el.classList)
-    return el.classList.contains(className);
-  return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
+  if (el.classList) return el.classList.contains(className);
+  return !!el.className.match(new RegExp("(\\s|^)" + className + "(\\s|$)"));
 }
 
 function addClass(el, className) {
-  if (el.classList)
-    return el.classList.add(className);
-  else if (!hasClass(el, className))
-    el.className += ' ' + className;
+  if (el.classList) return el.classList.add(className);
+  else if (!hasClass(el, className)) el.className += " " + className;
 }
 
 function removeClass(el, className) {
-  if (el.classList)
-    el.classList.remove(className);
+  if (el.classList) el.classList.remove(className);
   else if (hasClass(el, className)) {
-    var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
-    el.className = el.className.replace(reg, ' ');
+    var reg = new RegExp("(\\s|^)" + className + "(\\s|$)");
+    el.className = el.className.replace(reg, " ");
   }
 }
 
 function currency(amount) {
-  return 'Rp ' + amount;
+  return "Rp " + amount;
 }
 
 var products = [
   {
     id: 1,
-    name: 'Cappucino',
+    name: "Cappucino",
     price: 35000,
     active: true,
   },
   {
     id: 2,
-    name: 'Green Tea Latte',
+    name: "Green Tea Latte",
     price: 40000,
-    active: true
+    active: true,
   },
   {
     id: 3,
-    name: 'Fish and Chips',
+    name: "Fish and Chips",
     price: 50000,
     active: true,
   },
   {
     id: 4,
-    name: 'Tuna Sandwich',
+    name: "Tuna Sandwich",
     price: 45000,
     active: true,
   },
   {
     id: 5,
-    name: 'Mineral Water',
+    name: "Mineral Water",
     price: 8000,
     active: false,
   },
   {
     id: 6,
-    name: 'French Fries',
+    name: "French Fries",
     price: 18000,
     active: false,
   },
-   {
+  {
     id: 7,
-    name: 'Teh Obeng',
+    name: "Teh Obeng",
     price: 5000,
     active: false,
   },
   {
     id: 8,
-    name: 'Fanta Float',
+    name: "Fanta Float",
     price: 10000,
     active: false,
   },
   {
     id: 9,
-    name: 'Rice Box',
+    name: "Rice Box",
     price: 25000,
     active: false,
   },
   {
     id: 10,
-    name: 'Waffle',
+    name: "Waffle",
     price: 35000,
     active: false,
   },
   {
     id: 11,
-    name: 'Chicken Burger',
+    name: "Chicken Burger",
     price: 35000,
     active: false,
   },
 ];
 
 var total = 0;
-var $app = document.querySelector('.app');
+var $app = document.querySelector(".app");
 
 // Render title
 function renderTitle(container) {
-  var $title = document.createElement('h1');
-  $title.innerHTML = 'Pesanan';
+  var $title = document.createElement("h1");
+  $title.innerHTML = "Pesanan";
   container.appendChild($title);
 }
 
@@ -115,12 +110,12 @@ function addTotal(product, total, isAdd) {
 
 // Render list
 function renderList(container, products) {
-  var $orderList = document.createElement('ul');
+  var $orderList = document.createElement("ul");
 
   // Loop products, buat elemen tiap produk lalu append ke orderList
-  products.forEach(function(product) {
-    var $product = document.createElement('li');
-    var $productPrice = document.createElement('span');
+  products.forEach(function (product) {
+    var $product = document.createElement("li");
+    var $productPrice = document.createElement("span");
 
     $productPrice.innerHTML = currency(product.price);
     $product.innerHTML = product.name;
@@ -129,25 +124,24 @@ function renderList(container, products) {
     $orderList.appendChild($product);
 
     // Tambah event handler ketika produk di klik
-    $product.addEventListener('click', function(event) {
-
+    $product.addEventListener("click", function (event) {
       // isAdd untuk menentukan apakah operasi berikutnya adalah
       // operasi penambahan atau pengurangan
-      var isAdd = !hasClass($product, 'is-active');
+      var isAdd = !hasClass($product, "is-active");
 
       // Kita tambah atau buang class is-active sesuai operasi yang
       // akan dilakukan
       if (isAdd) {
-        addClass($product, 'is-active');
+        addClass($product, "is-active");
       } else {
-        removeClass($product, 'is-active');
+        removeClass($product, "is-active");
       }
 
       // Mendapatkan nilai total yang baru dari fungsi addTotal
       total = addTotal(product, total, isAdd);
 
       // Perbarui nilai total di DOM
-      var $total = document.querySelector('.total span');
+      var $total = document.querySelector(".total span");
       $total.innerHTML = currency(total);
     });
   });
@@ -157,12 +151,12 @@ function renderList(container, products) {
 
 // Render Total
 function renderTotalContainer(container, total) {
-  var $totalContainer = document.createElement('div');
-  addClass($totalContainer, 'total');
+  var $totalContainer = document.createElement("div");
+  addClass($totalContainer, "total");
 
-  $totalContainer.innerHTML = 'Total: ';
+  $totalContainer.innerHTML = "Total: ";
 
-  var $total = document.createElement('span');
+  var $total = document.createElement("span");
   $total.innerHTML = currency(total);
   $totalContainer.appendChild($total);
 
@@ -177,10 +171,9 @@ renderTotalContainer($app, total);
 // querySelectorAll untuk mendapat semua DOM Node yang sesuai dengan selector
 // yang diberikan. Kemudian kita bisa menggunaka loop (forEach) untuk mendapat
 // setiap DOM Node nya.
-var $products = document.querySelectorAll('li');
-$products.forEach(function($product, index) {
-
+var $products = document.querySelectorAll("li");
+$products.forEach(function ($product, index) {
   if (index < 0) {
-    $product.dispatchEvent(new Event('click'));
+    $product.dispatchEvent(new Event("click"));
   }
 });
